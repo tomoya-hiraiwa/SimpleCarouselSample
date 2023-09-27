@@ -10,13 +10,13 @@
 ###caroucelAdapter.kt
 ・ポイント１　実際のアイテム数＋２した値の準備
 
-'''kotlin
+'''
  //実際のアイテム数+2した数を準備しておく
     private val addCount = imageList.size+2
 '''
 
 ポイント2　onBindViewHolderでの実際のポジションの取得方法
-'''kotlin
+'''
   val dataPosition = when(position){
             //0の時→一番最後のアイテムを指定
             0 -> getRealCount() - 1
@@ -43,7 +43,7 @@
 
 ・ポイント3　カルーセルのインジケータとして使用しているタブの選択位置の処理
 
-'''kotlin
+'''
  pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             //ページが切り替わった時にインジケータの選択位置を変更する
             override fun onPageSelected(position: Int) {
@@ -98,7 +98,7 @@
   ###・tabのアイテムのクリック無効化
   ・各タブアイテムごとに無効化処理を行う必要があることに注意する
 
-    '''kotlin
+    '''
  //オプション：タブのアイテムのクリックを無効にする
         for (i in 0 until tab.tabCount){
             val tab = tab.getTabAt(i)
@@ -117,7 +117,7 @@
 
  ・MainActivity.kt
 
- '''kotlin
+ '''
    //オプション：ViewPagerのページ遷移動作をカスタマイズする
         pager.setPageTransformer { page, position ->
             //サイドのアイテムのサイズ倍率
