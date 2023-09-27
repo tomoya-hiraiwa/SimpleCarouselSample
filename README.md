@@ -1,22 +1,24 @@
 # SimpleCarouselSample
 **無限ループするカルーセルです**<br>
 ・viewPager2  
+
 ・TabLayout  
 
 を使用して作成しています。
 
-##1.Adapterの作成
+## 1.Adapterの作成
 
-###caroucelAdapter.kt
+### caroucelAdapter.kt
+
 ・ポイント１　実際のアイテム数＋２した値の準備
 
-'''
- //実際のアイテム数+2した数を準備しておく
+```kotlin
+    //実際のアイテム数+2した数を準備しておく
     private val addCount = imageList.size+2
-'''
-
+```
+    
 ポイント2　onBindViewHolderでの実際のポジションの取得方法
-'''
+```kotlin
   val dataPosition = when(position){
             //0の時→一番最後のアイテムを指定
             0 -> getRealCount() - 1
@@ -25,25 +27,26 @@
             //それ以外は実際のポジションから-1したアイテムを指定（アダプターのポジションが1を基準点にしているため）
             else  -> position -1
         }
-'''
+```
 
-##2.viewPagerへの実装
+## 2.viewPagerへの実装
 
-###MainActivity.kt
+### MainActivity.kt
 
 ・ポイント1.アダプターの選択位置は初期で1にしておく
+
 ・ポイント2.選択されているポジションの位置を保持しておく変数を用意する
 
-'''kotlin
+```kotlin
  //最初に表示するアイテムはpositionが1のアイテム
         pager.currentItem = 1
   //ViewPagerの現在のポジションを保持しておく変数（初期の値は1にしておく）
     private var nowPosition = 1
-'''
+```
 
 ・ポイント3　カルーセルのインジケータとして使用しているタブの選択位置の処理
 
-'''
+```kotlin
  pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             //ページが切り替わった時にインジケータの選択位置を変更する
             override fun onPageSelected(position: Int) {
@@ -68,11 +71,11 @@
                     nowPosition = adapter.itemCount -1
                 }
             }
-  '''
+  ```
 
   ・ポイント4　ポジションが端にいった時の処理（画面移動が完了した後にアニメーションなしで正しい位置に変更し直すことで、無限にループしているように見える）
 
-  '''kotlin
+  ```kotlin
  override fun onPageScrollStateChanged(state: Int) {
                 //スワイプが終了した時に動作させる
                 if (state == ViewPager2.SCROLL_STATE_IDLE){
@@ -92,32 +95,32 @@
                     }
                 }
             }
-  '''
+  ```
 
-  ##おまけ
-  ###・tabのアイテムのクリック無効化
+  ## おまけ
+  ### ・tabのアイテムのクリック無効化
+  
   ・各タブアイテムごとに無効化処理を行う必要があることに注意する
 
-    '''
+   ```kotlin
  //オプション：タブのアイテムのクリックを無効にする
         for (i in 0 until tab.tabCount){
             val tab = tab.getTabAt(i)
             tab?.view?.isClickable = false
         }
-  '''
+  ```
 
-  ###・左右に次のアイテムを表示させてよりカルーセルのような見た目に近づける
+  ### ・左右に次のアイテムを表示させてよりカルーセルのような見た目に近づける
 
   1.res/valuesにdimenファイル作成、all_marginを定義しておく
 
   2.カルーセルに使用するレイアウトファイルのmarginStart,marginEndにそれぞれall_marginをつける
 
-
   3.カルーセルのカスタムをコードで記述する
 
  ・MainActivity.kt
 
- '''
+ ```kotlin
    //オプション：ViewPagerのページ遷移動作をカスタマイズする
         pager.setPageTransformer { page, position ->
             //サイドのアイテムのサイズ倍率
@@ -134,7 +137,7 @@
             page.scaleX = scale
             page.scaleY = scale
         }
-'''
+```
 
 
    
